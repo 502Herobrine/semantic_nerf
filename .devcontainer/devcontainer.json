@@ -1,0 +1,33 @@
+{
+    "name": "Semantic-NeRF 复现环境",
+    // 使用官方 Ubuntu 20.04 基础镜像
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu-20.04",
+
+    "features": {
+        // 自动安装 Python 3.7 (该版本在 20.04 下稳定性最好)
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.7",
+            "installTools": true
+        }
+    },
+
+    "containerEnv": {
+        // 解决你之前遇到的 sklearn 报错
+        "SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL": "True"
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python3.7"
+            }
+        }
+    },
+
+    // 容器创建后的自动操作：升级 pip 并安装你的依赖
+    "postCreateCommand": "python3.7 -m pip install --upgrade pip && python3.7 -m pip install torch==1.6.0 torchvision==0.7.0 && python3.7 -m pip install -r requirements.txt"
+}
